@@ -1,0 +1,96 @@
+# Bash setup
+set -o emacs
+
+shopt -s histappend
+shopt -s cmdhist
+shopt -s checkwinsize
+
+unset HISTFILESIZE
+HISTSIZE=100000
+HISTCONTROL=ignoreboth
+HISTIGNORE='bg:fs:history:gh'
+HISTTIMEFORMAT='%F %T '
+export HISTFILE="$HOME/.bash_history"
+
+FIGNORE='~:.o'
+
+# OS setup
+umask 022
+ulimit -n 10000
+
+# Force hostname on foreign wifi networks
+OSNAME=$(uname -s)
+if [ "$OSNAME" = "Darwin" ]; then
+    HNAME=$(scutil --get ComputerName)
+else
+    HNAME=$(echo $HOSTNAME | cut -d. -f1)
+fi
+PS1="\A [\u@${HNAME}] \W> "
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HNAME}\007"'
+
+# Go setup
+export GOPATH="$HOME/go"
+
+BASEPATH="$HOME/bin"
+BASEPATH="$BASEPATH:/usr/local/bin:/usr/local/sbin"
+BASEPATH="$BASEPATH:/bin:/sbin:/usr/bin:/usr/sbin"
+[ -d $GOPATH/bin ] && BASEPATH="$BASEPATH:$GOPATH/bin"
+export PATH="$BASEPATH:."
+export PAGER="less"
+export LESS="-XRem"
+export VISUAL="vim"
+export MAKEFLAGS="--no-print-directory"
+
+# Set CDPATH
+BASECD="."
+[ -d $HOME/src ]          && BASECD="$BASECD:$HOME/src"
+[ -d $HOME/Projects ]     && BASECD="$BASECD:$HOME/Projects"
+[ -d $HOME/TestProjects ] && BASECD="$BASECD:$HOME/TestProjects"
+[ -d /usr/local/src ]     && BASECD="$BASECD:/usr/local/src"
+BASECD="$BASECD:$HOME"
+CDPATH="$BASECD"
+
+# Enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+alias .b="source $HOME/.bashrc"
+alias clean='rm -f .*~ .#* *~ *.bak'
+alias gff='git flow feature'
+alias gfh='git flow hotfix'
+alias gfr='git flow release'
+alias gfs='git flow support'
+alias h='history 100'
+alias l='ls -NFC'
+alias ll='ls -Nla'
+alias lsd='ls -Nla --color | grep --color=none ^d'
+alias lt='ls -Nltr'
+alias m='less'
+alias myip="curl icanhazip.com"
+alias t='top -o TIME -n 30 -s 3'
+alias cpu='top -o cpu'
+alias mem='top -o rsize' # memory
+
+s () {
+    ssh -t "$1" 'screen -R -D'
+}
+
+st () {
+    host="$1"
+    shift
+    ssh -t $host "tmux -u2 $@"
+}
+
+gh () {
+    history | grep --color=always "$@"
+}
+
+pid () {
+    ps -ef | egrep --color=always "PID|$1" | grep -v grep
+}
+

@@ -1,0 +1,103 @@
+[user]
+        name = Skip Koppenhaver
+        email = skipk@sri.private
+        ;email = koppacetic@gmail.com
+
+[core]
+        ; Needed on Mac OSX:
+        ; http://stackoverflow.com/questions/5074136/git-rebase-fails-your-local-changes-to-the-following-files-would-be-overwritte
+        trustctime = false
+        excludesfile = /Users/skip/.gitignore
+        editor = vim
+
+[color]
+        diff = auto
+        branch = auto
+        status = auto
+        ui = auto
+
+[alias]
+        ci = commit
+        cm = commit
+        co = checkout
+        br = branch -v
+        st = status
+        cp = cherry-pick
+        unstage = reset HEAD --
+        last = !git --no-pager log -1 --stat HEAD
+        uncommit = reset HEAD~
+
+        sb = status -sb
+        tags = tag -l
+        remotes = remote -v
+
+        log1 = log --oneline
+        flog = log --name-status
+        slog = log --stat
+        dlog  = log --color --pretty='format:%C(yellow)%h %Cgreen%cd %Creset%s'
+        rlog = log --color --pretty='format:%C(yellow)%h %Cgreen%cr %Creset%s'
+        lg = log --color --graph --pretty=format:'%C(yellow)%h %C(bold blue)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset'
+        glog = log --all --pretty='format:%d %Cgreen%h%Creset %an: %s' --graph
+
+        today     = log --since=midnight      --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
+        yesterday = log --since=yesterday     --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
+        week      = log --since='last week'   --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
+        weeks     = log --since='2 weeks ago' --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
+        lastmonth = log --since='last month'  --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
+        mystandup = log --author=Koppenhaver --since='last week' --date=short --pretty='format:%cd %s'
+
+        dif = diff -w -b --ignore-blank-lines
+
+        stashes = stash list
+        nfetch = fetch --dry-run
+        npush = push --dry-run
+
+        bls = branch -vv -a
+        conflicts = diff --name-only --diff-filter=U
+        staged = diff --cached
+;	up = !git fetch && git rebase --autostash FETCH_HEAD
+        up = pull --rebase --autostash
+
+[push]
+    default = simple
+
+[pull]
+    rebase = true
+
+[log]
+    date = format:%a %Y-%m-%d %H:%M
+
+[diff]
+    mnemonicprefix = true
+
+[rerere]
+    enabled = true
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[filter "media"]
+        clean = git-media-clean %f
+        smudge = git-media-smudge %f
+
+[git-up "bundler"]
+        check = true
+
+[hub]
+        protocol = https
+
+[filter "hawser"]
+        clean = git hawser clean %f
+        smudge = git hawser smudge %f
+        required = true
+[filter "lfs"]
+        required = true
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+

@@ -1,0 +1,32 @@
+escape          ^Gg
+
+startup_message	off
+#deflogin        off
+vbell		off
+autodetach      on
+defutf8         on
+
+defscrollback	4096
+
+msgwait         1
+msgminwait      3
+
+# Change the xterm initialization string from is2=\E[!p\E[?3;4l\E[4l\E>
+# (This fixes the "Aborted because of window size change" konsole symptoms found
+#  in bug #134198)
+termcapinfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+
+# Make xterm scrolling work properly with screen.
+termcapinfo xterm-256color|xterm-color|xterm|xterms|xs|rxvt ti@:te@
+
+#termcapinfo xterm* ti@:te@
+#altscreen   on
+
+#caption always "%{= kw}%-w%{= BW}%n %t%{-}%+w %-= @%H - %LD %d %LM - %c"
+
+#hardstatus alwayslastline
+#hardstatus string '%{= kG}[ %{G}%l %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+
+#bind f screen -t 'frog' sudo su - frog
+#bind m screen -t 'mysql' mysql -u root -psnoopy
+#bind t screen -t 'tail' tail -f /var/log/photobucket.log
