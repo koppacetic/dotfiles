@@ -1,0 +1,51 @@
+#!/bin/bash
+USAGE="USAGE: bcopy [-d dest] [-q] hostFile file"
+dest=
+quiet=
+
+# Handle command line options
+while true; do
+    case $1 in
+    -d)
+        dest=$2
+        shift 2
+        ;;
+
+    -q)
+        quiet=0
+        shift
+        ;;
+
+    -*)
+        echo $USAGE
+        exit 1
+        ;;
+
+    *)
+        break
+        ;;
+    esac
+done
+
+if [[ -z "$2" ]]; then
+    echo $USAGE
+    exit 1
+fi
+
+# Get file to copy
+hostlist=$(cat $1)
+shift
+file=$1
+
+for host in $hostlist; do
+    if [[ -z "$quiet" ]]; then
+        echo "======== $host ========"
+    fi
+
+    if ! ping -c 1 -q -W 2 $host >/dev/null; then
+        echo "$host unresponsive"
+        continue
+    fi
+
+    scp $file $host:$dest
+done

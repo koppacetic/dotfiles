@@ -1,0 +1,51 @@
+#!/bin/bash
+USAGE="USAGE: bexec [-q] hostFile cmd"
+quiet=
+opts=
+
+# Handle command line options
+while true; do
+    case $1 in
+    -B)
+        opts="$opts -f"
+        shift
+        ;;
+
+    -q)
+        quiet=1
+        shift
+        ;;
+
+    -*)
+        opts="$opts $1"
+        shift
+        ;;
+
+    *)
+        break
+        ;;
+    esac
+done
+
+if [[ -z "$2" ]]; then
+    echo $USAGE
+    exit 1
+fi
+
+# Get command to execute
+hostlist=$(cat $1)
+shift
+cmd="$@"
+
+for host in $hostlist; do
+    if [[ -z "$quiet" ]]; then
+        echo "======== $host ========"
+    fi
+
+    if ! ping -c 1 -q -W 2 $host >/dev/null; then
+        echo "$host unresponsive"
+        continue
+    fi
+
+    ssh $opts $host $cmd
+done
