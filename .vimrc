@@ -1,124 +1,81 @@
 set nocompatible
 
-" ======== Vundle Setup ========
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'ycm-core/YouCompleteMe'
-Plugin 'vim-syntastic/syntastic'
-
-Plugin 'nvie/vim-flake8'
-Plugin 'vim-scripts/indentpython.vim'
-
-Plugin 'fatih/vim-go'
-
-Plugin 'jnurmine/Zenburn'
-Plugin 'altercation/vim-colors-solarized'
-
-call vundle#end()
-" ======== Vundle Setup ========
-
 filetype plugin indent on
 
-" Make Syntastic and vim-go play nice together
-let g:syntastic_go_checkers = ['golint', 'govet']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-let g:go_list_type = "quickfix"
-
-" vim-go config
-let g:go_addtags_transform = "camelcase"
-let g:go_highlight_types = 1
-
-" Turn on syntax highlighting
-let python_highlight_all=1
-syntax on
+" Encoding
+set encoding=utf-8
 
 " Tabs
-set tabstop=4 shiftwidth=4 expandtab smarttab
+set tabstop=4 shiftwidth=4 softtabstop=4 expandtab smarttab
 
-" Show line numbers
-"set number
+" Searching
+set incsearch
+set ignorecase
+set smartcase
+
+set visualbell
+
+" make backspaces more powerfull
+set backspace=indent,eol,start
+
+" Make sure that unsaved buffers that are put in the background are
+" allowed to go in there (ie. no "must save first" error comes up)
+set hidden
+
+" Make the 'cw' and like commands put a $ at the end instead of just
+" deleting the text and replacing it
+set cpoptions=ces$
+
+" Always display a status line
+set laststatus=2
+
+" Set status line format
+"set statusline=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+
+" Show current command in lower right corner
+set showcmd
+"set cmdheight=2
+
+" Show current mode
+set showmode
+
+" Turn on syntax highlighting
+syntax on
+
+" Hide the mouse pointer when typing
+set mousehide
+set mouse=a
 
 " Disable backups
 set nobackup
 set nowritebackup
 set noswapfile
 
-" Blink cursor on error instead of beeping (grr)
-set visualbell
+" Fix for pasting indented text
+set pastetoggle=<F2>
 
-" Encoding
-set encoding=utf-8
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
 
-" make backspaces more powerfull
-set backspace=indent,eol,start
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
 
-" Hide the mouse pointer when typing
-set mousehide
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
 
-" Searching
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-set showmatch
-map <leader><space> :let @/=''<cr> " clear search
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
 
-let g:netrw_liststyle=3
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
 
-set wrap
-set textwidth=120
-set formatoptions=tcqrn1
-set noshiftround
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
-" Security
-set modelines=0
-
-" Cursor motion
-set scrolloff=3
-set matchpairs+=<:> " use % to jump between pairs
-runtime! macros/matchit.vim
-
-" Move up/down editor lines
-nnoremap j gj
-nnoremap k gk
-
-" Allow hidden buffers
-set hidden
-
-" Status bar
-set laststatus=2
-
-" Set status line format
-"set statusline=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
-set statusline=%<%f\ %h%m%r%=%-20.(Line:\ %l/%L\ \ Col:\ %c%)\ %P
-
-" Show current command in lower right corner
-set showcmd
-
-" Show current mode
-set showmode
-
-" Remap help key.
-inoremap <F1> <ESC>:set invfullscreen<CR>a
-nnoremap <F1> :set invfullscreen<CR>
-vnoremap <F1> :set invfullscreen<CR>
-
-" Formatting
-map <leader>q gqip
-
-" Visualize tabs and newlines
-set listchars=tab:▸\ ,eol:¬
-" Uncomment this to enable by default:
-" set list " To enable by default
-" Or use your leader key + l to toggle on/off
-map <leader>l :set list!<CR> " Toggle tabs and EOL
-
-"colorscheme zenburn
-
-" ==== YouCompleteMe ====
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"colorscheme desert
 

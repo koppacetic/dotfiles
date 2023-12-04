@@ -1,0 +1,26 @@
+# Ruby stuff
+#export GEM_HOME="$HOME/.gems"
+#export PATH="$GEM_HOME/bin:$PATH"
+
+# ORT stuff
+#export REQUESTS_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
+#export XVAULT_TOKEN="$(ssh dev4Vault cat root_token.txt)"
+export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u30.qqcyber.net/system"
+
+# Set PYPI_URL to local pypi server
+export PYPI_URL="https://pypi.incy.tech/dev/simple/"
+pypi() {
+    if [[ -n "$1" ]]; then
+         export PYPI_URL="https://pypi.incy.tech/$1/simple/"
+    fi
+    echo "PYPI_URL: $PYPI_URL"
+}
+
+alias .lv='echo LIBVIRT_DEFAULT_URI: $LIBVIRT_DEFAULT_URI'
+alias .lv1='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u36.qqcyber.net/system"'
+alias .lv236='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u36.qqcyber.net/system"'
+alias .lv230='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u30.qqcyber.net/system"'
+alias .lv234='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u34.qqcyber.net/system"'
+alias .lv237='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u37.qqcyber.net/system"'
+alias .lv238='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u38.qqcyber.net/system"'
+
