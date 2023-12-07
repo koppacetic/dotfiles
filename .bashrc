@@ -113,7 +113,11 @@ s () {
 st () {
     host="$1"
     shift
-    ssh -t $host "tmux -u2 $@"
+    if [[ -z "$1" ]]; then
+        ssh -t $host "tmux -u2 new-session -As main"
+    else
+        ssh -t $host "tmux -u2 new-session $@"
+    fi
 }
 
 hgrep () {
