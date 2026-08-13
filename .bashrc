@@ -40,23 +40,30 @@ elif [[ -f /usr/local/etc/bash_completion ]]; then
     . /usr/local/etc/bash_completion
 fi
 
+# Python stuff
+export PIPENV_VENV_IN_PROJECT=1
+alias psh='pipenv shell'
+
+# Go setup
+export GOPATH="$HOME/go"
+
 BASEPATH="$HOME/bin"
-[[ -d /opt/homebrew/bin ]] && BASEPATH="$BASEPATH:/opt/homebrew/bin"
 [[ -d $HOME/.local/bin ]] && BASEPATH="$BASEPATH:$HOME/.local/bin"
 BASEPATH="$BASEPATH:/usr/local/bin:/usr/local/sbin"
 BASEPATH="$BASEPATH:/bin:/sbin:/usr/bin:/usr/sbin"
 [[ -d /usr/local/go/bin ]] && BASEPATH="$BASEPATH:/usr/local/go/bin"
+[[ -d $HOME/.cargo/bin ]] && BASEPATH="$BASEPATH:$HOME/.cargo/bin"
 export PATH="$BASEPATH:."
 
 export PAGER="less"
 export LESS="-XRem"
+export EDITOR="vim"
 export VISUAL="vim"
 export MAKEFLAGS="--no-print-directory"
 #export RIPGREP_CONFIG_PATH="$HOME/.rgconfig"
 
 # Set CDPATH
 BASECD="."
-[[ -d $HOME/Projects ]]     && BASECD="$BASECD:$HOME/Projects"
 [[ -d $HOME/ort ]]          && BASECD="$BASECD:$HOME/ort"
 [[ -d $HOME/dart ]]         && BASECD="$BASECD:$HOME/dart"
 [[ -d $HOME/src ]]          && BASECD="$BASECD:$HOME/src"
@@ -64,18 +71,6 @@ BASECD="."
 [[ -d /usr/local/src ]]     && BASECD="$BASECD:/usr/local/src"
 BASECD="$BASECD:$HOME"
 CDPATH="$BASECD"
-
-# Ruby stuff
-eval "$(rbenv init -)"
-
-# Python stuff
-export PYENV_ROOT="$HOME/.pyenv"
-eval "$(pyenv init -)"
-export PIPENV_VENV_IN_PROJECT=1
-alias psh='pipenv shell'
-
-# Go setup
-[[ -d $HOME/go ]] && export GOPATH="$HOME/go"
 
 # Enable color support of ls and also add handy aliases
 if [[ -x /usr/bin/dircolors ]]; then
@@ -97,14 +92,14 @@ alias gfr='git flow release'
 alias gfs='git flow support'
 alias h='history 100'
 alias jt='python3 -m json.tool'
-alias l='ls -FC --color'
-alias ll='ls -la --color'
+alias l='ls -FC'
+alias ll='ls -la'
 alias lsd='ls -la --color | grep --color=none ^d'
-alias lt='ls -ltr --color'
+alias lt='ls -ltr'
 alias m='less'
 
-# alias dartcli_dev='python3 -m dart_cli.clickcli'
-# alias virtcli_dev='python3 -m virt_cli.cli'
+alias dartcli_dev='python3 -m dart_cli.clickcli'
+alias virtcli_dev='python3 -m virt_cli.cli'
 
 s () {
     ssh -t "$1" 'screen -R -D'
@@ -113,11 +108,7 @@ s () {
 st () {
     host="$1"
     shift
-    if [[ -z "$1" ]]; then
-        ssh -t $host "tmux -u2 new-session -As main"
-    else
-        ssh -t $host "tmux -u2 new-session $@"
-    fi
+    ssh -t $host "tmux -u2 $@"
 }
 
 hgrep () {
@@ -171,3 +162,10 @@ dkclean() {
 
 # Local config
 [[ -f ~/.bashrc.local ]] && source ~/.bashrc.local
+
+export MY_DART_PASSWORD="Andrew.0416.dart"
+#eval "$(_DART_CLI_COMPLETE=bash_source dart_cli)"
+#eval "$(_VIRTCLI_COMPLETE=bash_source virtcli)"
+
+[[ -f $HOME/.cargo/env ]] && . $HOME/.cargo/env
+

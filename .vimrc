@@ -6,7 +6,7 @@ filetype plugin indent on
 set encoding=utf-8
 
 " Tabs
-set tabstop=4 shiftwidth=4 softtabstop=4 expandtab smarttab
+set tabstop=4 shiftwidth=4 expandtab smarttab
 
 " Searching
 set incsearch
@@ -45,7 +45,6 @@ syntax on
 
 " Hide the mouse pointer when typing
 set mousehide
-set mouse=a
 
 " Disable backups
 set nobackup

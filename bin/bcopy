@@ -1,7 +1,13 @@
 #!/bin/bash
 USAGE="USAGE: bcopy [-d dest] [-q] hostFile file"
+LISTDIRS="${LISTDIRS:-$HOME}"
 dest=
 quiet=
+
+abort() {
+    echo $1
+    exit 1
+}
 
 # Handle command line options
 while true; do
@@ -26,26 +32,35 @@ while true; do
         ;;
     esac
 done
-
-if [[ -z "$2" ]]; then
-    echo $USAGE
-    exit 1
-fi
+[[ -z "$2" ]] && abort "$USAGE"
 
 # Get file to copy
-hostlist=$(cat $1)
+hostfile=$1
 shift
 file=$1
 
-for host in $hostlist; do
-    if [[ -z "$quiet" ]]; then
-        echo "======== $host ========"
-    fi
+# Find host file
+if [[ -f $hostfile ]]; then
+    hostlist=$(cat $hostfile)
+else
+    for d in $LISTDIRS; do
+        if [[ -f "$d/$hostfile" ]]; then
+            hostlist=$(cat $d/$hostfile)
+            break
+        fi
+    done
+fi
+[[ -z "$hostlist" ]] && abort "ERROR: Host list file not found: $hostfile"
 
-    if ! ping -c 1 -q -W 2 $host >/dev/null; then
-        echo "$host unresponsive"
-        continue
-    fi
+# Copy file to each host
+for host in $hostlist; do
+    [[ -z "$quiet" ]] && echo "======== $host ========"
+
+    # Make sure we can ping host
+    # if ! ping -c 1 -q -W 2 $host >/dev/null; then
+    #     echo "WARNING: $host unresponsive, skipping..."
+    #     continue
+    # fi
 
     scp $file $host:$dest
 done

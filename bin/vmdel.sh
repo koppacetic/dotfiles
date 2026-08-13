@@ -26,20 +26,22 @@ vmDelete() {
 
     isRunning=$(virsh list --state-running | grep $VMNAME)
     if [[ -n "$isRunning" ]]; then
-        echo "Shutting down $VMNAME..."
-        virsh shutdown $VMNAME || abort "Error shutting down $VMNAME"
+        echo "Destroying $VMNAME..."
+        virsh destroy $VMNAME || abort "Error destroying $VMNAME"
         waitForShutdown $VMNAME
     fi
 
-    for snap in $(virsh snapshot-list $VMNAME | tail +3 | awk '{print $1}'); do
-        echo "Deleting snapshot ${VMNAME}.${snap}..."
-        virsh snapshot-delete $VMNAME --snapshotname $snap || abort "Error deleting snapshot ${VMNAME}.${snap}"
-    done
+    baseSnapshot=$(virsh snapshot-list $VMNAME --tree | head -1)
+    if [[ -n "$baseSnapshot" ]]; then
+        echo "Removing snapshots..."
+        virsh snapshot-delete $VMNAME --children --snapshotname $baseSnapshot
+    fi
 
     echo "Undefining $VMNAME..."
-    virsh undefine $VMNAME --remove-all-storage --delete-storage-volume-snapshots --checkpoints-metadata
+    virsh undefine $VMNAME --remove-all-storage --delete-storage-volume-snapshots --checkpoints-metadata --nvram
 }
 
+echo "LIBVIRT_DEFAULT_URI: $LIBVIRT_DEFAULT_URI"
 echo "======== VMs to delete ========"
 virsh --readonly list --all | grep $VMPATTERN
 echo
@@ -56,4 +58,3 @@ for vm in $(virsh list --all); do
         echo ""
     fi
 done
-

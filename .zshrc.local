@@ -1,27 +1,40 @@
-# Homebrew stuff
-export HOMEBREW_NO_ENV_HINTS="1"
-
 # Ruby stuff
-#export SDKROOT=$(xcrun --show-sdk-path)
-#export PATH="$HOME/.gem/ruby/3.0.0/bin:$PATH"
+#export GEM_HOME="$HOME/.gems"
+#export PATH="$GEM_HOME/bin:$PATH"
 
 # ORT stuff
-export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u30.qqcyber.net/system?socket=/var/run/libvirt/libvirt-sock"
+#export REQUESTS_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
+#export XVAULT_TOKEN="$(ssh dev4Vault cat root_token.txt)"
+export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u30.incy.tech/system"
 
 # Set PYPI_URL to local pypi server
 export PYPI_URL="https://pypi.incy.tech/dev/simple/"
 pypi() {
     if [[ -n "$1" ]]; then
-        export PYPI_URL="https://pypi.incy.tech/$1/simple/"
+         export PYPI_URL="https://pypi.incy.tech/$1/simple/"
     fi
     echo "PYPI_URL: $PYPI_URL"
 }
 
-alias .lv='echo LIBVIRT_DEFAULT_URI: $LIBVIRT_DEFAULT_URI'
-alias .lv1='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u36.qqcyber.net/system?socket=/var/run/libvirt/libvirt-sock"'
-alias .lv236='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u36.qqcyber.net/system?socket=/var/run/libvirt/libvirt-sock"'
-alias .lv230='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u30.qqcyber.net/system?socket=/var/run/libvirt/libvirt-sock"'
-alias .lv234='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u34.qqcyber.net/system?socket=/var/run/libvirt/libvirt-sock"'
-alias .lv237='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u37.qqcyber.net/system?socket=/var/run/libvirt/libvirt-sock"'
-alias .lv238='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u38.qqcyber.net/system?socket=/var/run/libvirt/libvirt-sock"'
+alias .kvm='echo LIBVIRT_DEFAULT_URI: $LIBVIRT_DEFAULT_URI'
+alias .kvm233='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u33.incy.tech/system"'
+alias .kvm236='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u36.incy.tech/system"'
+alias .kvm229='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u29.incy.tech/system"'
+alias .kvm230='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u30.incy.tech/system"'
+alias .kvm234='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u34.incy.tech/system"'
+alias .kvm237='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u37.incy.tech/system"'
+alias .kvm238='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u38.incy.tech/system"'
+
+# Github account switching
+.koppa() {
+    git config --global user.name "Skip Koppenhaver"
+    git config --global user.email "koppacetic@gmail.com"
+    export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_koppacetic -o IdentitiesOnly=yes"
+}
+
+.mccree() {
+    git config --global user.name "McCree"
+    git config --global user.email "mccree@incy.tech"
+    export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o IdentitiesOnly=yes"
+}
 

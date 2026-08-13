@@ -1,16 +1,12 @@
 [user]
-    name = Skip Koppenhaver
-    email = skip.koppenhaver@us.qinetiq.com
-    ;email = koppacetic@gmail.com
-
-[includeif "gitdir:~/src/"]
-    path = ~/src/.gitconfig
+	name = McCree
+	email = mccree@incy.tech
 
 [core]
         ; Needed on Mac OSX:
         ; http://stackoverflow.com/questions/5074136/git-rebase-fails-your-local-changes-to-the-following-files-would-be-overwritte
         trustctime = false
-	excludesfile = /Users/skip/.gitignore
+        excludesfile = /Users/skip/.gitignore
         editor = vim
 
 [color]
@@ -48,10 +44,10 @@
         week      = log --since='last week'   --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
         weeks     = log --since='2 weeks ago' --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
         lastmonth = log --since='last month'  --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
-        mystandup = log --author=Koppenhaver --since='last week' --date=short --pretty='format:%cd %s'
+        mystandup = log --author=McCree --since='last week' --date=short --pretty='format:%cd %s'
+        mystandup2 = log --author=McCree --since='2 weeks ago' --date=short --pretty='format:%cd %s'
 
         dif = diff -w -b --ignore-blank-lines
-        cdif = log -p -U -w -b --ignore-blank-lines
 
         stashes = stash list
         nfetch = fetch --dry-run
@@ -60,7 +56,6 @@
         bls = branch -vv -a
         conflicts = diff --name-only --diff-filter=U
         staged = diff --cached
-;	up = !git fetch && git rebase --autostash FETCH_HEAD
         up = pull --rebase --autostash
 
 [push]
@@ -69,8 +64,14 @@
 [pull]
     rebase = true
 
+[fetch]
+	prune = true
+
 [log]
     date = format:%a %Y-%m-%d %H:%M
+
+[blame]
+    date = format:%Y-%m-%d %H:%M
 
 [diff]
     mnemonicprefix = true
@@ -83,7 +84,7 @@
 	path =
 
 [mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 
 [filter "media"]
@@ -106,7 +107,5 @@
         smudge = git-lfs smudge -- %f
         process = git-lfs filter-process
 
-[url "git@gitlab.private.sec:"]
-	insteadOf = https://gitlab.private.sec/
-[init]
-	defaultBranch = master
+;[url "git@gitlab.private.sec:"]
+;	insteadOf = https://gitlab.private.sec/
