@@ -1,11 +1,3 @@
-# VS Code stuff
-.vscode
-
-# Python stuff
-*.pyc
-__pycache__
-
-# C stuff
 *.o
 *.d
 
@@ -36,7 +28,7 @@ CVS
 .hg
 
 # Thumbnails
-#._*
+._*
 
 # Files that might appear on external disk
 .Spotlight-V100
@@ -48,5 +40,3 @@ Pods/*
 # Carthage
 Carthage/*
 
-
-**/.claude/settings.local.json
