@@ -1,62 +1,63 @@
 [user]
-	name = McCree
-	email = mccree@incy.tech
+	name = Skip Koppenhaver
+	email = koppacetic@gmail.com
 
 [core]
-        ; Needed on Mac OSX:
-        ; http://stackoverflow.com/questions/5074136/git-rebase-fails-your-local-changes-to-the-following-files-would-be-overwritte
-        trustctime = false
-        excludesfile = /Users/skip/.gitignore
-        editor = vim
+    ; Needed on Mac OSX:
+    ; http://stackoverflow.com/questions/5074136/git-rebase-fails-your-local-changes-to-the-following-files-would-be-overwritte
+    trustctime = false
+    excludesfile = /Users/skip/.gitignore
+    editor = vim
 
 [color]
-        diff = auto
-        branch = auto
-        status = auto
-        ui = auto
+    diff = auto
+    branch = auto
+    status = auto
+    ui = auto
 
 [alias]
-        ci = commit
-        cm = commit
-        co = checkout
-        br = branch -v
-        st = status
-        cp = cherry-pick
-        unstage = reset HEAD --
-        last = !git --no-pager log -1 --stat HEAD
-        uncommit = reset HEAD~
+    ci = commit
+    cm = commit
+    co = checkout
+    br = branch -v
+    st = status
+    cp = cherry-pick
+    unstage = reset HEAD --
+    last = !git --no-pager log -1 --stat HEAD
+    uncommit = reset HEAD~
 
-        sb = status -sb
-        tags = tag -l
-        remotes = remote -v
+    sb = status -sb
+    tags = tag -l
+    remotes = remote -v
 
-        log1 = log --oneline
-        flog = log --name-status
-        slog = log --stat
-        dlog  = log --color --pretty='format:%C(yellow)%h %Cgreen%cd %Creset%s'
-        rlog = log --color --pretty='format:%C(yellow)%h %Cgreen%cr %Creset%s'
-        lg = log --color --graph --pretty=format:'%C(yellow)%h %C(bold blue)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset'
-        glog = log --all --pretty='format:%d %Cgreen%h%Creset %an: %s' --graph
-        tree = log --oneline --graph --decorate --all
+    log1 = log --oneline
+    flog = log --name-status
+    slog = log --stat
+    dlog  = log --color --pretty='format:%C(yellow)%h %Cgreen%cd %Creset%s'
+    rlog = log --color --pretty='format:%C(yellow)%h %Cgreen%cr %Creset%s'
+    lg = log --color --graph --pretty=format:'%C(yellow)%h %C(bold blue)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset'
+    glog = log --all --pretty='format:%d %Cgreen%h%Creset %an: %s' --graph
+    tree = log --oneline --graph --decorate --all
 
-        today     = log --since=midnight      --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
-        yesterday = log --since=yesterday     --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
-        week      = log --since='last week'   --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
-        weeks     = log --since='2 weeks ago' --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
-        lastmonth = log --since='last month'  --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
-        mystandup = log --author=McCree --since='last week' --date=short --pretty='format:%cd %s'
-        mystandup2 = log --author=McCree --since='2 weeks ago' --date=short --pretty='format:%cd %s'
+    today     = log --since=midnight      --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
+    yesterday = log --since=yesterday     --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
+    week      = log --since='last week'   --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
+    weeks     = log --since='2 weeks ago' --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
+    lastmonth = log --since='last month'  --pretty='format:%C(yellow)%h %Cgreen%cd %Cblue%an%Creset\t%s %Cred%d'
+    mystandup = log --author=McCree --since='last week' --date=short --pretty='format:%cd %s'
+    mystandup2 = log --author=McCree --since='2 weeks ago' --date=short --pretty='format:%cd %s'
 
-        dif = diff -w -b --ignore-blank-lines
+    dif = diff -w -b --ignore-blank-lines
+    commits = log -p
 
-        stashes = stash list
-        nfetch = fetch --dry-run
-        npush = push --dry-run
+    stashes = stash list
+    nfetch = fetch --dry-run
+    npush = push --dry-run
 
-        bls = branch -vv -a
-        conflicts = diff --name-only --diff-filter=U
-        staged = diff --cached
-        up = pull --rebase --autostash
+    bls = branch -vv -a
+    conflicts = diff --name-only --diff-filter=U
+    staged = diff --cached
+    up = pull --rebase --autostash
 
 [push]
     default = simple
@@ -65,7 +66,7 @@
     rebase = true
 
 [fetch]
-	prune = true
+   prune = true
 
 [log]
     date = format:%a %Y-%m-%d %H:%M
@@ -83,29 +84,22 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-
 [filter "media"]
-        clean = git-media-clean %f
-        smudge = git-media-smudge %f
+    clean = git-media-clean %f
+    smudge = git-media-smudge %f
 
 [git-up "bundler"]
-        check = true
+    check = true
 
 [hub]
-        protocol = https
+    protocol = https
 
-[filter "hawser"]
-        clean = git hawser clean %f
-        smudge = git hawser smudge %f
-        required = true
 [filter "lfs"]
-        required = true
-        clean = git-lfs clean -- %f
-        smudge = git-lfs smudge -- %f
-        process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 
-;[url "git@gitlab.private.sec:"]
-;	insteadOf = https://gitlab.private.sec/
+[init]
+	defaultBranch = master
+
