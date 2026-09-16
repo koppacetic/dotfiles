@@ -1,3 +1,10 @@
+# Local LLM stuff
+#export ANTHROPIC_BASE_URL="http://localhost:8000"
+
+alias .llm='echo ANTHROPIC_BASE_URL: ${ANTHROPIC_BASE_URL}; echo "ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}"'
+alias .llm-local='export ANTHROPIC_BASE_URL="http://localhost:8000"; export ANTHROPIC_API_KEY="fakeToken"'
+alias .llm-remote='unset ANTHROPIC_BASE_URL; unset ANTHROPIC_API_KEY'
+
 # Ruby stuff
 #export GEM_HOME="$HOME/.gems"
 #export PATH="$GEM_HOME/bin:$PATH"
@@ -29,12 +36,10 @@ alias .kvm238='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u38.incy.tech/syste
 .koppa() {
     git config --global user.name "Skip Koppenhaver"
     git config --global user.email "koppacetic@gmail.com"
-    export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_koppacetic -o IdentitiesOnly=yes"
 }
 
 .mccree() {
     git config --global user.name "McCree"
     git config --global user.email "mccree@incy.tech"
-    export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o IdentitiesOnly=yes"
 }
 

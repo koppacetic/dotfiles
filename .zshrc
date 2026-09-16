@@ -6,12 +6,27 @@ unsetopt NOMATCH
 #shopt -s cmdhist
 #shopt -s checkwinsize
 
-unset HISTFILESIZE
+# -------- History --------
+#HISTFILE="$HOME/.zhistory"
 HISTSIZE=100000
+SAVEHIST=100000
+
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+
 HISTCONTROL=ignoreboth
 HISTIGNORE='bg:fs:history:gh'
 HISTTIMEFORMAT='%F %T '
-export HISTFILE="$HOME/.zsh_history"
+
+# -------- Editor --------
+export EDITOR="vim"
+export VISUAL="vim"
+
 
 FIGNORE='~:.o'
 
@@ -58,11 +73,12 @@ export MAKEFLAGS="--no-print-directory"
 
 # Set CDPATH
 BASECD="."
-[[ -d $HOME/ort ]]          && BASECD="$BASECD:$HOME/ort"
-[[ -d $HOME/dart ]]         && BASECD="$BASECD:$HOME/dart"
-[[ -d $HOME/src ]]          && BASECD="$BASECD:$HOME/src"
-[[ -d $HOME/osrc ]]         && BASECD="$BASECD:$HOME/osrc"
-[[ -d /usr/local/src ]]     && BASECD="$BASECD:/usr/local/src"
+[[ -d $HOME/ort ]]        && BASECD="$BASECD:$HOME/ort"
+[[ -d $HOME/dart ]]       && BASECD="$BASECD:$HOME/dart"
+[[ -d $HOME/Projects ]]   && BASECD="$BASECD:$HOME/Projects"
+[[ -d $HOME/src ]]        && BASECD="$BASECD:$HOME/src"
+[[ -d $HOME/osrc ]]       && BASECD="$BASECD:$HOME/osrc"
+#[[ -d /usr/local/src ]]   && BASECD="$BASECD:/usr/local/src"
 BASECD="$BASECD:$HOME"
 CDPATH="$BASECD"
 
@@ -122,7 +138,7 @@ st () {
 }
 
 hgrep () {
-    history | grep --color=always "$@"
+    history 1 | grep --color=always "$@"
 }
 
 pid () {
@@ -184,3 +200,18 @@ case ":$PATH:" in
   *) export PATH="$HOME/.omlx/bin:$PATH" ;;
 esac
 # oMLX: CLI shim path end
+
+export PATH="/Users/skip/.pixi/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/skip/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+# Added by MTPLX.app — terminal command
+export PATH="$HOME/.mtplx/bin:$PATH"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/skip/.docker/completions $fpath)
+autoload -Uz compinit
+(( ${+_comps[docker]} )) || compinit
+# End of Docker CLI completions
