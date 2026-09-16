@@ -1,0 +1,43 @@
+font-family = "Monaspace Neon Regular"
+font-style = "Regular"
+font-style-bold = "Bold"
+font-style-italic = "Italic"
+font-style-bold-italic = "Bold Italic
+#font-family-bold = "Monaspace Neon Bold"
+#font-family-italic = "Monaspace Neon Italic"
+#font-family-bold-italic = "Monaspace Neon Bold Italic"
+font-size = 18
+theme = "Catppuccin Mocha"
+#background-opacity = 0.92
+#background-blur-radius = 20
+
+window-theme = system
+macos-titlebar-style = native
+window-decoration = auto
+window-show-tab-bar = always
+window-new-tab-position = end
+window-width = 130
+window-height = 36
+window-padding-x = 8
+window-padding-y = 8
+
+window-save-state = never
+quit-after-last-window-closed = true
+
+cursor-style = block
+cursor-style-blink = false
+
+mouse-hide-while-typing = true
+copy-on-select = clipboard
+
+keybind = cmd+t=new_tab
+keybind = cmd+w=close_surface
+keybind = cmd+arrow_right=next_tab
+keybind = cmd+arrow_left=previous_tab
+#keybind = cmd + alt + backslash = new_split:right
+#keybind = cmd + alt + minus = new_split:bottom
+#keybind = opt+cmd+arrow_left=goto_split:left
+#keybind = opt+cmd+arrow_right=goto_split:right
+#keybind = opt+cmd+arrow_up=goto_split:up
+#keybind = opt+cmd+arrow_down=goto_split:down
+
