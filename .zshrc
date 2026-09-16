@@ -124,16 +124,16 @@ alias m='less'
 # alias virtcli_dev='python3 -m virt_cli.cli'
 
 s () {
-    ssh -t "$1" 'screen -R -D'
+    TERM=xterm-256color ssh -t "$1" "screen -R -D"
 }
 
 st () {
     host="$1"
     shift
     if [[ -n "$1" ]]; then
-        ssh -t $host "tmux -u2 $@"
+        TERM=xterm-256color ssh -t $host "tmux -u2 $@"
     else
-        ssh -t $host "tmux -u2 new -As main"
+        TERM=xterm-256color ssh -t $host "tmux -u2 new -As main"
     fi
 }
 
