@@ -44,12 +44,33 @@ umask 022
 #PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HNAME}\007"'
 
 autoload -U colors && colors
+
+function separator() {
+  # tput setaf to set to terminal color 0
+  # printf command is used to format and print text to the terminal
+  # The %*s format specifier is used to print a string, where the * indicates that the width
+  #   of the string should be specified as an argument
+  # The ${COLUMNS:-$(tput cols)} expression is used to determine the width of the terminal window.
+  # The COLUMNS variable is set by the shell to the number of columns in the terminal window,
+  #   and the tput cols command retrieves the number of columns in the terminal window.
+  #   The :- operator is used to set a default value for the COLUMNS variable if it is not set.
+  #   In this case, the default value is the output of the tput cols command, which retrieves the
+  #   number of columns in the terminal window.
+  # The tr command is used to replace all spaces in the input string with _
+  separation_line=$(tput setaf 0; printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _)
+  echo "${separation_line}"
+}
+
+function precmd() {
+  separator
+}
+
 if [[ $UID = 0 ]]; then
     PROMPT="%{${fg[yellow]}%}%n@%m%{${fg[default]}%}# "
-    RPROMPT="%{${fg[white]}%}%~ %T"
+    RPROMPT="%{${fg[cyan]}%}%~ %T"
 else
     PROMPT="%{${fg[yellow]}%}%n@%m%{${fg[default]}%}> "
-    RPROMPT="%{${fg[white]}%}%~ %T"
+    RPROMPT="%{${fg[cyan]}%}%~ %T"
 fi
 
 # Homebrew config
