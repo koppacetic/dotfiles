@@ -35,18 +35,22 @@ umask 022
 #ulimit -n 10000
 
 # Force hostname on foreign wifi networks
-OSNAME=$(uname -s)
-if [[ "$OSNAME" = "Darwin" ]]; then
-    HNAME=$(scutil --get ComputerName)
-else
-    HNAME=$(echo $HOSTNAME | cut -d. -f1)
-fi
+#OSNAME=$(uname -s)
+#if [[ "$OSNAME" = "Darwin" ]]; then
+#    HNAME=$(scutil --get ComputerName)
+#else
+#    HNAME=$(echo $HOSTNAME | cut -d. -f1)
+#fi
+#PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HNAME}\007"'
+
+autoload -U colors && colors
 if [[ $UID = 0 ]]; then
-    PS1="[%n@%m] %1~# "
+    PROMPT="%{${fg[yellow]}%}%n@%m%{${fg[default]}%}# "
+    RPROMPT="%{${fg[white]}%}%~ %T"
 else
-    PS1="[%n@%m] %1~> "
+    PROMPT="%{${fg[yellow]}%}%n@%m%{${fg[default]}%}> "
+    RPROMPT="%{${fg[white]}%}%~ %T"
 fi
-PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HNAME}\007"'
 
 # Homebrew config
 export HOMEBREW_NO_ASK=1
