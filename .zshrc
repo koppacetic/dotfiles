@@ -34,6 +34,7 @@ FIGNORE='~:.o'
 umask 022
 #ulimit -n 10000
 
+# -------- Prompt--------
 # Force hostname on foreign wifi networks
 #OSNAME=$(uname -s)
 #if [[ "$OSNAME" = "Darwin" ]]; then
@@ -65,6 +66,7 @@ function precmd() {
   separator
 }
 
+ZLE_RPROMPT_INDENT=0
 if [[ $UID = 0 ]]; then
     PROMPT="%{${fg[yellow]}%}%n@%m%{${fg[default]}%}# "
     RPROMPT="%{${fg[cyan]}%}%~ %{${fg[magenta]}%}%T"
