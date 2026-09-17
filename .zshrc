@@ -67,10 +67,10 @@ function precmd() {
 
 if [[ $UID = 0 ]]; then
     PROMPT="%{${fg[yellow]}%}%n@%m%{${fg[default]}%}# "
-    RPROMPT="%{${fg[cyan]}%}%~ %T"
+    RPROMPT="%{${fg[cyan]}%}%~ %{${fg[magenta]}%}%T"
 else
     PROMPT="%{${fg[yellow]}%}%n@%m%{${fg[default]}%}> "
-    RPROMPT="%{${fg[cyan]}%}%~ %T"
+    RPROMPT="%{${fg[cyan]}%}%~ %{${fg[magenta]}%}%T"
 fi
 
 # Homebrew config
