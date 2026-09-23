@@ -1,0 +1,43 @@
+# Homebrew stuff
+export HOMEBREW_NO_ENV_HINTS="1"
+
+# Ruby stuff
+#export SDKROOT=$(xcrun --show-sdk-path)
+#export PATH="$HOME/.gem/ruby/3.0.0/bin:$PATH"
+
+# ORT stuff
+export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u30.incy.tech/system?socket=/var/run/libvirt/libvirt-sock"
+
+# Set PYPI_URL to local pypi server
+export PYPI_URL="https://pypi.incy.tech/dev/simple/"
+pypi() {
+    if [[ -n "$1" ]]; then
+        export PYPI_URL="https://pypi.incy.tech/$1/simple/"
+    fi
+    echo "PYPI_URL: $PYPI_URL"
+}
+
+alias .kvm='echo LIBVIRT_DEFAULT_URI: $LIBVIRT_DEFAULT_URI'
+alias .kvm233='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u33.incy.tech/system?socket=/var/run/libvirt/libvirt-sock"'
+alias .kvm236='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u36.incy.tech/system?socket=/var/run/libvirt/libvirt-sock"'
+alias .kvm239='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u39.incy.tech/system?socket=/var/run/libvirt/libvirt-sock"'
+
+alias .kvm229='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u29.incy.tech/system?socket=/var/run/libvirt/libvirt-sock"'
+alias .kvm230='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u30.incy.tech/system?socket=/var/run/libvirt/libvirt-sock"'
+alias .kvm234='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u34.incy.tech/system?socket=/var/run/libvirt/libvirt-sock"'
+alias .kvm237='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u37.incy.tech/system?socket=/var/run/libvirt/libvirt-sock"'
+alias .kvm238='export LIBVIRT_DEFAULT_URI="qemu+ssh://kvm-r2-u38.incy.tech/system?socket=/var/run/libvirt/libvirt-sock"'
+
+# Github account switching
+.koppa() {
+    git config --global user.name "Skip Koppenhaver"
+    git config --global user.email "koppacetic@gmail.com"
+    export GIT_SSH_COMMAND="ssh -i ~/.ssh/koppacetic_rsa -o IdentitiesOnly=yes"
+}
+
+.mccree() {
+    git config --global user.name "McCree"
+    git config --global user.email "mccree@incy.tech"
+    export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o IdentitiesOnly=yes"
+}
+
